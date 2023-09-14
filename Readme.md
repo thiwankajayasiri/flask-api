@@ -110,7 +110,7 @@ Examples
 ```bash
 curl -X POST http://127.0.0.1:5000/employees \
      -H "Content-Type: application/json" \
-     -d '{"id": 2, "first_name": "Jane", "last_name": "Doe", "position": "Manager"}'
+     -d '{"id": 3, "first_name": "TJ", "last_name": "Jaya", "position": "SA"}'
 
 ```
 
