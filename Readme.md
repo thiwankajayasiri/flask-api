@@ -132,7 +132,7 @@ curl -X GET http://127.0.0.1:5000/employees/1
 ```bash
 curl -X PUT http://127.0.0.1:5000/employees/1 \
      -H "Content-Type: application/json" \
-     -d '{"first_name": "John", "last_name": "Smith", "position": "Senior Engineer"}'
+     -d '{"id": 1, "first_name": "John", "last_name": "Smith", "position": "Senior Engineer"}'
 ```
 
 - Delete an employee:
