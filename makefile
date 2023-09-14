@@ -9,7 +9,10 @@ install:
 test:
 	poetry run pytest
 
+coverage:
+	poetry run pytest --cov=your_package_name --cov-report=xml
+
 run:
 	poetry run flask run
 
-.PHONY: install test run
+.PHONY: install test coverage run
