@@ -1,0 +1,36 @@
+# .gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Environment and configuration files
+.env
+.env.local
+.env.*
+.env.*.local
+env.yml
+
+# IDE and editor files
+.idea/
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Logs and databases
+*.log
+
+# Cache
+.cache/
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+
+
+# Ignore mypy cache directory
+.mypy_cache/
