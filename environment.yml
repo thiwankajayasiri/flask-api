@@ -1,0 +1,15 @@
+name: flask-app-employee
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10  
+  - flake8
+  - mypy
+  - pre-commit
+  - pytz
+  - types-pytz
+  - flask
+  - pydantic
+  - pytest
+  - pytest-cov
+  - locust

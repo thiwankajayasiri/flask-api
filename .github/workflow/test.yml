@@ -1,0 +1,25 @@
+name: flask-api-test-workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Install Poetry
+      run: pip install poetry
+    - name: Install Dependencies
+      run: make install
+    - name: Run Tests
+      run: make test
