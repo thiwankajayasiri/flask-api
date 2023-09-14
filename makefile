@@ -17,4 +17,4 @@ doc:
 run:
 	poetry run flask run
 
-.PHONY: install test coverage run
+.PHONY: install test coverage doc run

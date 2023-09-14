@@ -1,4 +1,4 @@
-name: flask-api
+name: flask-api-documentation
 
 # build the documentation whenever there are new commits on main
 on:
