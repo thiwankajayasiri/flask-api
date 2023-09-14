@@ -9,7 +9,7 @@ test:
 	poetry run pytest
 
 coverage:
-	poetry run pytest --cov=./ --cov-report=xml
+	poetry run pytest --cov=./ --cov-report=xml:./coverage.xml
 
 run:
 	poetry run flask run
