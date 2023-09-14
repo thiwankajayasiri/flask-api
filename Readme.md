@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/your_username/your_repository_name/branch/main/graph/badge.svg)](https://github.com/thiwankajayasiri/flask-api)
+[![codecov](https://app.codecov.io/gh/thiwankajayasiri/flask-api/main/graph/badge.svg)](https://github.com/thiwankajayasiri/flask-api)
 
 # Employee Management API
 
