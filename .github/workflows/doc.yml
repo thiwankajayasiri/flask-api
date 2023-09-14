@@ -1,6 +1,6 @@
 name: flask-api-documentation
 
-# build the documentation whenever there are new commits on main
+# Build the documentation whenever there are new commits on the main branch
 on:
   push:
     branches:
@@ -23,26 +23,28 @@ jobs:
       - name: Install Dependencies
         run: make install
       - run: make doc  
-      - uses: actions/upload-artifact@v2
+      - name: Upload Documentation Artifact
+        uses: actions/upload-artifact@v2
         with:
           name: documentation
           path: docs/
 
   deploy:
-    needs: build 
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }} 
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-        - name: Download Artifact
-            uses: actions/download-artifact@v2
-            with:
-            name: documentation
-        - name: Deploy to GitHub Pages
-            uses: actions/deploy-pages@v2
-            with:
-            path: ./documentation
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: documentation
+          path: documentation
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          path: ./documentation
