@@ -9,28 +9,27 @@ on:
 permissions:
   contents: read
 
-  
 jobs:
-test:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.10
-    uses: actions/setup-python@v2
-    with:
-        python-version: '3.10'
-    - name: Install Poetry
-    run: pip install poetry
-    - name: Install Dependencies
-    run: make install
-    # Generate documentation using a target from your Makefile
-    - run: make doc  
-    - uses: actions/upload-pages-artifact@v2
-    with:
-        path: docs/  
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install Dependencies
+        run: make install
+      - run: make doc  
+      - uses: actions/upload-artifact@v2
+        with:
+          name: documentation
+          path: docs/
 
   deploy:
-    needs: build
+    needs: test 
     runs-on: ubuntu-latest
     permissions:
       pages: write
