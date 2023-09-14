@@ -22,13 +22,13 @@ jobs:
     - name: Install Dependencies
       run: make install
     - name: Run Tests and Generate Coverage
-      run: make coverage  
+      run: make coverage  # Changed this line to generate coverage
     - name: Debug - Show current directory and list files
-    run: |
-      pwd
-      ls -alh
+      run: |
+        pwd
+        ls -alh
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
+        file: ./coverage.xml  
