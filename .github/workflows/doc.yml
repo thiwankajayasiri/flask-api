@@ -37,6 +37,15 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # steps:
+    #   - id: deployment
+    #     uses: actions/deploy-pages@v2  
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v2
+        - name: Download Artifact
+            uses: actions/download-artifact@v2
+            with:
+            name: documentation
+        - name: Deploy to GitHub Pages
+            uses: actions/deploy-pages@v2
+            with:
+            path: ./documentation
