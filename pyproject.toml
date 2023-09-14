@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "flask_api"
 version = "0.1.0"
 description = "A simple Flask API for managing employees"
-authors = ["Thiwanka Jayasiri <thiwankajayasiri@icloud.com"]
+authors = ["Thiwanka Jayasiri <thiwankajayasiri@icloud.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
