@@ -73,6 +73,8 @@ conda env create -f environment.yml
 conda activate flask-app-employee
 ```
 
+For more information, please refer to the [API Documentation](https://thiwankajayasiri.github.io/flask-api/app.html).
+
 ---
 
 ## Usage
