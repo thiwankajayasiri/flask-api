@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/github/thiwankajayasiri/flask-api/graph/badge.svg?token=C1YSBULP4C)](https://codecov.io/github/thiwankajayasiri/flask-api)
 # Employee Management API
 
 An easy-to-use, RESTful API for managing employees, built with Flask and Pydantic.
