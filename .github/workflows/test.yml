@@ -21,5 +21,9 @@ jobs:
       run: pip install poetry
     - name: Install Dependencies
       run: make install
-    - name: Run Tests
-      run: make test
+    - name: Run Tests with Coverage
+      run: make coverage
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        file: ./coverage.xml # adjust this path to wherever your coverage.xml file is generated
