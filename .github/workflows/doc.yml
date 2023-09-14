@@ -36,10 +36,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    # steps:
-    #   - id: deployment
-    #     uses: actions/deploy-pages@v2  
+      url: ${{ steps.deployment.outputs.page_url }} 
     steps:
         - name: Download Artifact
             uses: actions/download-artifact@v2
