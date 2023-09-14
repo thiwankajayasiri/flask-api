@@ -12,7 +12,7 @@ coverage:
 	poetry run pytest --cov=./ --cov-report=xml:./coverage.xml
 
 doc:
-	poetry run pdoc app.py --output-dir docs
+	poetry run pdoc ./app.py -o ./docs
 
 run:
 	poetry run flask run
