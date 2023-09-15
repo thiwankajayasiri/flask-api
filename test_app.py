@@ -15,9 +15,9 @@ def client():
 def test_get_employees(client):
     try:
         logging.info('Running test_get_employees')
-        rv = client.get('/employees')
+        rv = client.get('/v1/employees')  # Updated endpoint
         assert rv.status_code == 200
-        assert len(json.loads(rv.data)) == len(employees)
+        assert len(json.loads(rv.data)["data"]) == len(employees)  # Assuming "data" key contains the employee list
         logging.info('PASSED: test_get_employees')
     except AssertionError as e:
         logging.error('FAILED: test_get_employees')
@@ -33,7 +33,7 @@ def test_add_employee(client):
             "last_name": "Johnson",
             "position": "Developer"
         }
-        rv = client.post('/employees', json=new_employee)
+        rv = client.post('/v1/employees', json=new_employee)
         assert rv.status_code == 201
         assert json.loads(rv.data) == new_employee
         logging.info('PASSED: test_add_employee')
@@ -51,7 +51,7 @@ def test_add_employee_with_existing_id(client):
             "last_name": "Johnson",
             "position": "Developer"
         }
-        rv = client.post('/employees', json=existing_employee)
+        rv = client.post('/v1/employees', json=existing_employee)
         assert rv.status_code == 409
         assert "Conflict" in json.loads(rv.data)["error"]
         logging.info('PASSED: test_add_employee_with_existing_id')
@@ -69,7 +69,7 @@ def test_update_existing_employee(client):
             "last_name": "Doe",
             "position": "Lead Engineer"
         }
-        rv = client.put('/employees/1', json=updated_employee)
+        rv = client.put('/v1/employees/1', json=updated_employee)
         assert rv.status_code == 200
         assert json.loads(rv.data)["data"]["position"] == "Lead Engineer"
         logging.info('PASSED: test_update_existing_employee')
@@ -86,7 +86,7 @@ def test_update_non_existing_employee(client):
             "last_name": "Doe",
             "position": "Lead Engineer"
         }
-        rv = client.put('/employees/100', json=updated_employee)
+        rv = client.put('/v1/employees/100', json=updated_employee)
         assert rv.status_code == 404
         assert "Not Found" in json.loads(rv.data)["error"]
         logging.info('PASSED: test_update_non_existing_employee')
@@ -98,7 +98,7 @@ def test_update_non_existing_employee(client):
 def test_delete_existing_employee(client):
     try:
         logging.info('Running test_delete_existing_employee')
-        rv = client.delete('/employees/1')
+        rv = client.delete('/v1/employees/1')
         assert rv.status_code == 200
         assert "Employee deleted" in json.loads(rv.data)["message"]
         logging.info('PASSED: test_delete_existing_employee')
@@ -110,11 +110,24 @@ def test_delete_existing_employee(client):
 def test_delete_non_existing_employee(client):
     try:
         logging.info('Running test_delete_non_existing_employee')
-        rv = client.delete('/employees/100')
+        rv = client.delete('/v1/employees/100')
         assert rv.status_code == 404
         assert "Not Found" in json.loads(rv.data)["error"]
         logging.info('PASSED: test_delete_non_existing_employee')
     except AssertionError as e:
         logging.error('FAILED: test_delete_non_existing_employee')
+        logging.error('Error Details: %s', e)
+        raise
+
+
+def test_get_employee_by_id(client):
+    try:
+        logging.info('Running test_get_employee_by_id')
+        rv = client.get('/v1/employees/1')  # New endpoint
+        assert rv.status_code == 200
+        assert json.loads(rv.data)["data"]["id"] == 1  # Assuming "data" key contains employee data
+        logging.info('PASSED: test_get_employee_by_id')
+    except AssertionError as e:
+        logging.error('FAILED: test_get_employee_by_id')
         logging.error('Error Details: %s', e)
         raise
