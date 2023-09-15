@@ -1,9 +1,16 @@
 from flask import Flask, request, jsonify, make_response
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from pydantic import BaseModel, Field, ValidationError
 from typing import List
+from cache_manager import invalidate_cache ,cache, cached_keys
 import logging
-# Initialize Flask app
+
+# Initialize Flask app and Limiter for rate limiting
 app = Flask(__name__)
+
+limiter = Limiter(key_func=get_remote_address, app=app, default_limits=["5 per minute"])
+
 
 # Initialize logging
 logging.basicConfig(level=logging.DEBUG)
@@ -31,9 +38,19 @@ def is_unique_id(employee_id: int) -> bool:
             return False
     return True
 
+@cache.memoize()
+def get_employee_by_id(employee_id):
+    # retrieve employee from database or data structure 
+    employee = next((employee for employee in employees if employee.id == employee_id), None)
+    return employee
+
+def after_employee_add_or_update():
+    invalidate_cache("get_employee")
+
 
 # ADD: Add a new employee
-@app.route('/employees', methods=['POST'])
+@app.route('/v1/employees', methods=['POST'])
+@limiter.limit("2 per minute")
 def add_employee():
     """
     Add a new employee.
@@ -62,16 +79,43 @@ def add_employee():
 
 # READ: Get all employees
 # Simple endpoint to read all data. No validation required.
-@app.route('/employees', methods=['GET'])
+@cache.cached(timeout=60, key_prefix='get_employees')  # cache for 1 minute
+@app.route('/v1/employees', methods=['GET'])
+@limiter.limit("10 per minute")
 def get_employees():
     """
-    Retrieve all existing employees.
+    Retrieve paginated existing employees.
+    Supports pagination through 'page' and 'per_page' query parameters.
     Returns:
-        JSON: List of all employee data or error message.
+        JSON: List of employee data on the current page or error message.
     """
     try:
-        # Retrieve all employee data and convert to list of dicts
-        return make_response(jsonify([employee.dict() for employee in employees]), 200)
+        # Get pagination parameters from query string
+        page = int(request.args.get('page', 1))  # Default page is 1
+        per_page = int(request.args.get('per_page', 10))  # Default 10 items per page
+
+        # Calculate start and end indices for the slice of data to return
+        start = (page - 1) * per_page
+        end = start + per_page
+
+        # Retrieve and paginate employee data, then convert to list of dicts
+        paginated_employees = employees[start:end]
+        meta_data = {
+            "total_employees": len(employees),
+            "page": page,
+            "per_page": per_page,
+        }
+
+        response = {
+            "data": [employee.dict() for employee in paginated_employees],
+            "meta": meta_data
+        }
+
+        return make_response(jsonify(response), 200)
+
+    except ValueError as e:
+        # ValueError: Invalid value for 'page' or 'per_page'
+        return make_response(jsonify({"error": "Bad Request", "message": f"Invalid pagination parameter: {e}"}), 400)
 
     except AttributeError as e:
         # AttributeError: One of the objects is missing the `dict()` method or similar
@@ -83,8 +127,9 @@ def get_employees():
 
 
 # UPDATE: Update an existing employee
-@app.route('/employees/<int:employee_id>', methods=['PUT'])
-def update_employee(employee_id):
+@app.route('/v1/employees/<int:employee_id>', methods=['PUT'])
+@limiter.limit("2 per minute")
+def update_employee(employee_id: int):
     """
     Update an existing employee by ID.
     Parameters:
@@ -104,6 +149,9 @@ def update_employee(employee_id):
         existing_employee.first_name = updated_employee.first_name
         existing_employee.last_name = updated_employee.last_name
         existing_employee.position = updated_employee.position
+
+        # Invalidate cache or perform other actions
+        after_employee_add_or_update()
         # Return updated data
         return make_response(jsonify({"status": "success", "message": "Employee updated", "data": updated_employee.dict()}), 200)
 
@@ -122,8 +170,10 @@ def update_employee(employee_id):
         print(f"An unexpected error occurred: {e}")
         return make_response(jsonify({"error": "Internal Server Error", "message": "An unexpected error occurred"}), 500)
 
+
 # DELETE: Delete an existing employee
-@app.route('/employees/<int:employee_id>', methods=['DELETE'])
+@app.route('/v1/employees/<int:employee_id>', methods=['DELETE'])
+@limiter.limit("1 per minute")
 def delete_employee(employee_id):
     """
     Delete an employee by ID.
@@ -153,7 +203,9 @@ def delete_employee(employee_id):
 
 
 # Optional endpoint to get a single employee by ID
-@app.route('/employees/<int:employee_id>', methods=['GET'])
+@cache.memoize()
+@app.route('/v1/employees/<int:employee_id>', methods=['GET'])
+@limiter.limit("10 per minute")
 def get_employee(employee_id):
     """
     Retrieve an employee by their ID.
@@ -162,6 +214,9 @@ def get_employee(employee_id):
     Returns:
         - JSON object containing the employee information and success status, or an error message if not found.
     """
+    # Add the cache key for this specific employee
+    cache_key = f'get_employee_{employee_id}'
+    cached_keys.add(cache_key)
     # Filter the list of employees to find the employee with the given ID
     matching_employees = [employee.dict() for employee in employees if employee.id == employee_id]
 
