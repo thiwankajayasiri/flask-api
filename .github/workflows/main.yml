@@ -3,7 +3,7 @@ name: heroku-deploy-pipeline
 on:
   push:
     branches:
-      - master # Trigger the workflow on push events to the master branch
+      - main # Trigger the workflow on push events to the master branch
 
 jobs:
   build:
