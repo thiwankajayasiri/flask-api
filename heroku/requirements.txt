@@ -1,0 +1,4 @@
+flask
+flask_limiter
+flask-caching
+gunicorn

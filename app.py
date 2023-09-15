@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, ValidationError
 from typing import List
 from cache_manager import invalidate_cache ,cache, cached_keys
 import logging
-
+import os
 # Initialize Flask app and Limiter for rate limiting
 app = Flask(__name__)
 
@@ -246,4 +246,5 @@ def get_employee(employee_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
