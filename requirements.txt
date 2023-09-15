@@ -3,3 +3,4 @@ flask_limiter
 flask-caching
 gunicorn
 pydantic
+pytest
