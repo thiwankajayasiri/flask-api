@@ -13,6 +13,7 @@ COPY heroku/ /app/
 
 # Copy app.py into the working directory
 COPY app.py /app/
+COPY cache_manager.py /app/
 
 # Copy requirements.txt into the working directory
 COPY requirements.txt /app/
