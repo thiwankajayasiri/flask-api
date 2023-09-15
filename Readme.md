@@ -114,6 +114,22 @@ For more comprehensive details, please refer to the [API Documentation](https://
 
 For detailed examples of API usage, please refer to the [usage documentation](api_usage.md).
 
+> [!NOTE]
+> Use the ENTRYPOINT `https://employee-api-08b577bce533.herokuapp.com/` use Heroku based deployment
+please follow the usage patter given on the usage_documentation
+
+e.g.
+
+```bash
+curl -X 'GET' 'https://employee-api-08b577bce533.herokuapp.com/v1/employees'
+```
+
+result 
+
+```bash
+{"data":[{"first_name":"John","id":1,"last_name":"Doe","position":"Engineer"},{"first_name":"Jane","id":2,"last_name":"Doe","position":"Manager"},{"first_name":"Mike","id":3,"last_name":"Johnson","position":"Developer"}],"meta":{"page":1,"per_page":10,"total_employees":3}}
+```
+
 ---
 
 ## Testing
