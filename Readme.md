@@ -137,7 +137,7 @@ python -m locust
 
 > [!NOTE]
 > Navigate to `http://localhost:8089` to start the Locust performance test.
-Sample performance test results can be found on the [performance_results](https://thiwankajayasiri.github.io/flask-api/performance/report.html).
+Sample performance test results can be found on the [performance_results](https://thiwankajayasiri.github.io/flask-api/docs/report.html).
 
 
 > [!WARNING]
