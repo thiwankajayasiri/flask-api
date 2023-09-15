@@ -115,13 +115,13 @@ For more comprehensive details, please refer to the [API Documentation](https://
 For detailed examples of API usage, please refer to the [usage documentation](api_usage.md).
 
 > [!NOTE]
-> Use the ENTRYPOINT `https://employee-api-08b577bce533.herokuapp.com/` use Heroku based deployment
+> Use the ENTRYPOINT `https://employee-api-stage-fd8d182a1891.herokuapp.com/` use Heroku based deployment
 please follow the usage patter given on the usage_documentation
 
 e.g.
 
 ```bash
-curl -X 'GET' 'https://employee-api-08b577bce533.herokuapp.com/v1/employees'
+curl -X 'GET' 'https://employee-api-stage-fd8d182a1891.herokuapp.com/'
 ```
 
 result 

@@ -10,11 +10,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py /app/
 COPY cache_manager.py /app/
-COPY entrypoint.sh /app/
-RUN chmod +x /app/entrypoint.sh
-
+COPY run_app.py /app/
 # Expose the port the app runs on (Use environment variable)
 ENV PORT=5000
 
-
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Existing lines
+CMD ["python", "run_app.py"]
