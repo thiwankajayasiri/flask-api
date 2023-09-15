@@ -121,7 +121,7 @@ please follow the usage patter given on the usage_documentation
 e.g.
 
 ```bash
-curl -X 'GET' 'https://employee-api-stage-fd8d182a1891.herokuapp.com/'
+curl -X 'GET' 'https://employee-api-stage-fd8d182a1891.herokuapp.com/v1/employees'
 ```
 
 result 
