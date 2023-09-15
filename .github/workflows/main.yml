@@ -21,4 +21,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku API key stored as a GitHub secret
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}} # Heroku app name stored as a GitHub secret
           heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email stored as a GitHub secret
-          stack: "container" # Use container stack since you're deploying a Dockerized app
+          stack: "container" # This deploys the app as a container
