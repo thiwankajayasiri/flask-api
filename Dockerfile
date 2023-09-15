@@ -12,8 +12,9 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /app
 
+COPY heroku/ /app/
 # Copy requirements and install Python dependencies
-COPY requirements.txt .
+
 RUN pip3 install -r requirements.txt
 
 # Start a new stage
@@ -24,13 +25,9 @@ RUN apt-get update && \
     apt-get install -y python3 && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy files from build stage
-COPY --from=build-stage /root/.local /root/.local
 COPY app.py /app/
 COPY cache_manager.py /app/
 
-# Make sure scripts in .local are usable:
-ENV PATH=/root/.local/bin:$PATH
 
 # Expose the port the app runs on (Use environment variable)
 ENV PORT=5000
