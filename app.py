@@ -50,7 +50,7 @@ def after_employee_add_or_update():
 
 # ADD: Add a new employee
 @app.route('/v1/employees', methods=['POST'])
-@limiter.limit("2 per minute")
+@limiter.limit("4 per minute")
 def add_employee():
     """
     Add a new employee.
@@ -79,9 +79,9 @@ def add_employee():
 
 # READ: Get all employees
 # Simple endpoint to read all data. No validation required.
-@cache.cached(timeout=60, key_prefix='get_employees')  # cache for 1 minute
+@cache.cached(timeout=100, key_prefix='get_employees')  # cache for 1 minute
 @app.route('/v1/employees', methods=['GET'])
-@limiter.limit("10 per minute")
+@limiter.limit("30 per minute")
 def get_employees():
     """
     Retrieve paginated existing employees.
@@ -173,7 +173,7 @@ def update_employee(employee_id: int):
 
 # DELETE: Delete an existing employee
 @app.route('/v1/employees/<int:employee_id>', methods=['DELETE'])
-@limiter.limit("1 per minute")
+@limiter.limit("2 per minute")
 def delete_employee(employee_id):
     """
     Delete an employee by ID.
