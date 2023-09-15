@@ -12,21 +12,21 @@ class EmployeeManagementUser(HttpUser):
             "last_name": "Doe",
             "position": "Manager"
         }
-        response = self.client.post("/employees", json=payload)
+        response = self.client.post("/v1/employees", json=payload)
         if response.status_code != 201:
             print(f"Failed to create employee: {response.status_code}")
 
     # Fetch all employees
     @task(2)
     def get_employees(self):
-        response = self.client.get("/employees")
+        response = self.client.get("/v1/employees")
         if response.status_code != 200:
             print(f"Failed to get employees: {response.status_code}")
 
     # Fetch a specific employee
     @task(3)
     def get_single_employee(self):
-        response = self.client.get("/employees/1")
+        response = self.client.get("/v1/employees/1")
         if response.status_code != 200:
             print(f"Failed to get single employee: {response.status_code}")
 
@@ -39,13 +39,13 @@ class EmployeeManagementUser(HttpUser):
             "last_name": "Doe",
             "position": "Senior Engineer"
         }
-        response = self.client.put("/employees/1", json=payload)
+        response = self.client.put("/v1/employees/1", json=payload)
         if response.status_code != 200:
             print(f"Failed to update employee: {response.status_code}")
 
     # Delete an employee
     @task(1)
     def delete_employee(self):
-        response = self.client.delete("/employees/5")
+        response = self.client.delete("/v1/employees/5")
         if response.status_code != 200:
             print(f"Failed to delete employee: {response.status_code}")
