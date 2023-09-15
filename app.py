@@ -87,6 +87,8 @@ def get_employees():
     """
     Retrieve paginated existing employees.
     Supports pagination through 'page' and 'per_page' query parameters.
+    Filters by position through the 'position' query parameter.
+    Sorts by field through the 'sort_by' and 'order' query parameters.
     Returns:
         JSON: List of employee data on the current page or error message.
     """
