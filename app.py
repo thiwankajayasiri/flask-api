@@ -27,7 +27,8 @@ class Employee(BaseModel):
 # Data structure to hold employee data. Using a list for simplicity.
 employees: List[Employee] = [
     Employee(id=1, first_name='John', last_name='Doe', position='Engineer'),
-    Employee(id=2, first_name='Jane', last_name='Doe', position='Manager')
+    Employee(id=2, first_name='Jane', last_name='Doe', position='Manager'),
+    Employee(id=3, first_name='Mike', last_name='Johnson', position='Developer')
 ]
 
 
@@ -89,11 +90,26 @@ def get_employees():
     Returns:
         JSON: List of employee data on the current page or error message.
     """
+    global employees
     try:
         # Get pagination parameters from query string
         page = int(request.args.get('page', 1))  # Default page is 1
         per_page = int(request.args.get('per_page', 10))  # Default 10 items per page
+        position_filter = request.args.get('position', None)  # Optional position filter
+        sort_by = request.args.get('sort_by', None)  # Optional sort by field
+        order = request.args.get('order', 'asc')  # Optional sort order
 
+        # filter by position if filter is provided
+        if position_filter is not None:
+            employees = [employee for employee in employees if employee.position == position_filter]
+        else:
+            employees = employees
+
+        # sort by field if sort_by is provided
+        if sort_by is not None:
+            employees = sorted(employees, key=lambda x: getattr(x, sort_by), reverse=order == 'desc')
+        else:
+            employees = employees
         # Calculate start and end indices for the slice of data to return
         start = (page - 1) * per_page
         end = start + per_page
