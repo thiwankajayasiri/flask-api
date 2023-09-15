@@ -128,15 +128,24 @@ python -m pytest
 
 ### Performance Testing
 
+navigate to ```api-perf-testing``` directory
+conda 
+
 ```bash
-locust
+python -m locust
 ```
 
 > [!NOTE]
 > Navigate to `http://localhost:8089` to start the Locust performance test.
+Sample performance test results can be found on the [performance_results](https://thiwankajayasiri.github.io/flask-api/docs/performance/report_1694743162.380766.html).
 
-> [!IMPORTANT]
-> Monitoring test results is crucial for assessing the API's performance under load.
+
+> [!WARNING]
+> Due to some issues with Poetry, the performance test is not working with Poetry. Please use Conda for performance testing.
+poetry
+```bash
+poetry run python -m locust
+```
 
 ---
 
