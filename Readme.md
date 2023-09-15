@@ -96,7 +96,21 @@ conda env create -f environment.yml
 conda activate flask-app-employee
 ```
 
+- Running the API
+
+conda
+```bash
+flask run
+```
+
+poetry
+```bash
+poetry run flask run
+```
+
 For more comprehensive details, please refer to the [API Documentation](https://thiwankajayasiri.github.io/flask-api/app.html).
+
+For detailed examples of API usage, please refer to the [usage documentation](api_usage.md).
 
 ---
 
