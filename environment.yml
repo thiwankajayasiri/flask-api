@@ -13,3 +13,5 @@ dependencies:
   - pytest
   - pytest-cov
   - locust
+  - flask_limiter
+  - flask-caching

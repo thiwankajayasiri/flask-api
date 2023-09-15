@@ -26,7 +26,7 @@ Manage a list of employees with CRUD operations. Each employee has an `id`, `fir
 
 ---
 
-## Design Considerations
+## Project Considerations
 
 - The API is designed to be RESTful, using appropriate HTTP methods.
 - Utilizes Pydantic for data validation.
@@ -35,6 +35,52 @@ Manage a list of employees with CRUD operations. Each employee has an `id`, `fir
 - Tested with ```pytest```, ```pytest-flask```, and Locust.
 - Includes a CI/CD pipeline via GitHub Actions.
 - Code quality assured by ```flake8``` and ```mypy```.
+
+
+## Flask API Design Considerations
+
+When designing this API, I was ensuring that it not only conforms to RESTful principles but also includes additional features that make it robust, scalable, and user-friendly. Below are the design considerations that have been implemented in our API.
+
+### General Considerations
+
+1. **Versioning**: the API is versioned, making it future-proof for both the server and client. The endpoints start with `/v1/` to indicate that this is version 1 of our API.
+
+2. **Pagination**: The `GET /employees` route supports pagination, offering a way to limit the number of records returned. This ensures that neither the server nor the client is overwhelmed.
+
+3. **Filtering and Sorting**: I have added query parameters on the `GET /employees` endpoint, allowing for specific filtering and sorting of records.
+
+4. **Rate Limiting**: To protect against abuse, rate limiting has been implemented across all API endpoints.
+
+5. **Caching**: Our API employs caching strategies to minimize server load and speed up client requests.
+
+6. **Throttling**: I’ve implemented throttling to further limit the number of API requests a user can make within a given timeframe.
+
+7. **Logging and Monitoring**: Detailed logs are kept and monitoring is in place to ensure issues can be detected and resolved quickly.
+
+### Endpoint-Specific Considerations
+
+- **Add (POST /employees)**
+  - The `id` is generated server-side, ensuring there are no conflicts.
+  - Checks are in place to confirm that an employee with a given `id` or unique attribute doesn't already exist.
+
+- **Read All (GET /employees)**
+  - Metadata like the total number of employees is included in the response.
+
+- **Read One (GET /employees/<id>)**
+  - A 404 status code is returned if an employee with the given `id` doesn't exist.
+
+- **Update (PUT /employees/<id>)**
+  - A check is in place to ensure that an employee exists before attempting an update.
+  - A 404 status code is returned if the employee doesn't exist, and a 200 or 204 status code is returned upon a successful update.
+
+- **Delete (DELETE /employees/<id>)**
+  - A check is in place to ensure that an employee exists before attempting a delete.
+  - A 404 status code is returned if the employee doesn't exist, and a 200 or 204 status code is returned upon successful deletion.
+
+By implementing these features, I believe the API offers a robust, scalable, and user-friendly experience.
+
+
+
 
 ---
 
@@ -105,41 +151,57 @@ flask run
 
 Examples
 
-- Add an employee:
+- Add an employee(POST):
 
 ```bash
-curl -X POST http://127.0.0.1:5000/employees \
-     -H "Content-Type: application/json" \
-     -d '{"id": 3, "first_name": "TJ", "last_name": "Jaya", "position": "SA"}'
+curl -X POST "http://localhost:5000/v1/employees" \
+-H "Content-Type: application/json" \
+-d '{
+  "id": 1,
+  "first_name": "John",
+  "last_name": "Doe",
+  "position": "Software Engineer"
+}'
+
 
 ```
 
-- Read all employees:
+- Retrive all employees(GET):
+```bash
+curl -X GET "http://localhost:5000/v1/employees"
+```
+
+
+- Retrive all employees(GET) with pagination:
 
 ```bash
-curl -X GET http://127.0.0.1:5000/employees
+curl -X GET "http://localhost:5000/v1/employees?page=1&per_page=10"
 ```
 
 - Read employee by ID:
 
 ```bash
-curl -X GET http://127.0.0.1:5000/employees/1
+curl -X GET http://localhost:5000/v1/employees/1
 ```
 
 
-- Update an employee:
+- Update an employee(PUT):
 
 ```bash
-curl -X PUT http://127.0.0.1:5000/employees/1 \
-     -H "Content-Type: application/json" \
-     -d '{"id": 1, "first_name": "John", "last_name": "Smith", "position": "Senior Engineer"}'
+curl -X PUT "http://localhost:5000/v1/employees/1" \
+-H "Content-Type: application/json" \
+-d '{
+  "id": 1,
+  "first_name": "John",
+  "last_name": "Jaya",
+  "position": "Solution Architect"
+}'
 ```
 
-- Delete an employee:
+- Delete an employee(DELETE):
 
 ```bash
-curl -X DELETE http://127.0.0.1:5000/employees/1
-
+curl -X DELETE "http://localhost:5000/v1/employees/1"
 ```
 
 ---
