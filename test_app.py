@@ -1,6 +1,7 @@
 import json
 import pytest
 import logging
+import time
 from app import app, employees, Employee
 
 # Configure logging
@@ -78,8 +79,10 @@ def test_update_existing_employee(client):
         logging.error('Error Details: %s', e)
         raise
 
+
 def test_update_non_existing_employee(client):
     try:
+        time.sleep(1)  # delay to prevent rate limit, not recommended, but works for this test
         logging.info('Running test_update_non_existing_employee')
         updated_employee = {
             "first_name": "John",
@@ -107,8 +110,10 @@ def test_delete_existing_employee(client):
         logging.error('Error Details: %s', e)
         raise
 
+
 def test_delete_non_existing_employee(client):
     try:
+        time.sleep(30)  # delay to prevent rate limit, not recommended, but works for this test
         logging.info('Running test_delete_non_existing_employee')
         rv = client.delete('/v1/employees/100')
         assert rv.status_code == 404
@@ -123,10 +128,23 @@ def test_delete_non_existing_employee(client):
 def test_get_employee_by_id(client):
     try:
         logging.info('Running test_get_employee_by_id')
-        rv = client.get('/v1/employees/1')  # New endpoint
+        
+        # Create a new employee with ID 8
+        new_employee = {
+            "id": 8,
+            "first_name": "TJ",
+            "last_name": "Jaya",
+            "position": "Developer"
+        }
+        rv = client.post('/v1/employees', json=new_employee)
+        assert rv.status_code == 201  # Assuming 201 means successfully created
+        
+        # Now try fetching the employee
+        rv = client.get('/v1/employees/8')  # Matching ID with the one you created
         assert rv.status_code == 200
-        assert json.loads(rv.data)["data"]["id"] == 1  # Assuming "data" key contains employee data
+        assert json.loads(rv.data)["data"]["id"] == 8  # Match ID
         logging.info('PASSED: test_get_employee_by_id')
+        
     except AssertionError as e:
         logging.error('FAILED: test_get_employee_by_id')
         logging.error('Error Details: %s', e)
