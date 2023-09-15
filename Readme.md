@@ -1,6 +1,6 @@
 [![codecov](https://codecov.io/github/thiwankajayasiri/flask-api/graph/badge.svg?token=C1YSBULP4C)](https://codecov.io/github/thiwankajayasiri/flask-api)
 
-[!Test Pass][(https://github.com/thiwankajayasiri/flask-api/actions/workflows/test.yml/badge.svg)](https://github.com/thiwankajayasiri/flask-api/actions/workflows/test.yml)
+[![TestPass](https://github.com/thiwankajayasiri/flask-api/actions/workflows/test.yml/badge.svg)](https://github.com/thiwankajayasiri/flask-api/actions/workflows/test.yml)
 
 # Employee Management API
 
