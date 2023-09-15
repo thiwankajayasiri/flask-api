@@ -29,8 +29,8 @@ def test_add_employee(client):
     try:
         logging.info('Running test_add_employee')
         new_employee = {
-            "id": 3,
-            "first_name": "Mike",
+            "id": 4,
+            "first_name": "Time",
             "last_name": "Johnson",
             "position": "Developer"
         }
@@ -147,5 +147,46 @@ def test_get_employee_by_id(client):
         
     except AssertionError as e:
         logging.error('FAILED: test_get_employee_by_id')
+        logging.error('Error Details: %s', e)
+        raise
+
+
+# Test GET employees with position filter
+def test_get_employees_with_filter(client):
+    try:
+        logging.info('Running test_get_employees_with_filter')
+        rv = client.get('/v1/employees?position=Developer')
+        assert rv.status_code == 200
+        filtered_data = json.loads(rv.data)["data"]
+        assert all(employee['position'] == 'Developer' for employee in filtered_data)
+        logging.info('PASSED: test_get_employees_with_filter')
+    except AssertionError as e:
+        logging.error('FAILED: test_get_employees_with_filter')
+        logging.error('Error Details: %s', e)
+        raise
+
+
+# Test GET employees with sorting
+def test_get_employees_with_sort(client):
+    try:
+        logging.info('Running test_get_employees_with_sort')
+
+        # Fetch employees sorted by first_name in ascending order
+        rv = client.get('/v1/employees?sort_by=first_name&order=asc')
+        assert rv.status_code == 200
+
+        # Assuming that the response contains a "data" key with a list of employee dicts
+        data = json.loads(rv.data)['data']
+        sorted_names = [employee['first_name'] for employee in data]
+        
+        # 'expected_sorted_names' should be set based on what you expect after sorting.
+        expected_sorted_names = ['Mike', 'TJ', 'Time']
+        
+        assert sorted_names == expected_sorted_names
+
+        logging.info('PASSED: test_get_employees_with_sort')
+
+    except AssertionError as e:
+        logging.error('FAILED: test_get_employees_with_sort')
         logging.error('Error Details: %s', e)
         raise

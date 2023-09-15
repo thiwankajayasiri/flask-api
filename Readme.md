@@ -51,7 +51,7 @@ When designing this API, I was ensuring that it not only conforms to RESTful pri
 
 4. **Rate Limiting**: To protect against abuse, rate limiting has been implemented across all API endpoints.
 
-5. **Caching**: Our API employs caching strategies to minimize server load and speed up client requests.
+5. **Caching**: The API employs caching strategies to minimize server load and speed up client requests.
 
 6. **Throttling**: I’ve implemented throttling to further limit the number of API requests a user can make within a given timeframe.
 
@@ -169,6 +169,30 @@ curl -X POST "http://localhost:5000/v1/employees" \
 - Retrive all employees(GET):
 ```bash
 curl -X GET "http://localhost:5000/v1/employees"
+```
+
+- Filter employees by position(GET):
+
+```bash
+curl -X 'GET' \
+'http://localhost:5000/v1/employees?position=Developer' \
+-H 'accept: application/json'
+```
+
+- Sort employees by first name in ascending order(GET):
+
+```bash
+curl -X 'GET' \
+'http://localhost:5000/v1/employees?sort=first_name&order=asc' \
+-H 'accept: application/json'
+```
+
+- Combinig filters and sorting(GET):
+
+```bash
+curl -X 'GET' \
+'http://localhost:5000/v1/employees?position=Developer&sort=first_name&order=asc' \
+-H 'accept: application/json'
 ```
 
 
