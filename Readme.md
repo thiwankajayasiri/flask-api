@@ -1,5 +1,7 @@
 [![codecov](https://codecov.io/github/thiwankajayasiri/flask-api/graph/badge.svg?token=C1YSBULP4C)](https://codecov.io/github/thiwankajayasiri/flask-api)
 
+[!Test Pass][(https://github.com/thiwankajayasiri/flask-api/blob/main/.github/workflows/test.yml/badge.svg)](https://github.com/thiwankajayasiri/flask-api/blob/main/.github/workflows/test.yml)
+
 # Employee Management API
 
 A RESTful API for managing employees, built with Flask and Pydantic.
@@ -129,7 +131,8 @@ python -m pytest
 ### Performance Testing
 
 navigate to ```api-perf-testing``` directory
-conda 
+
+- conda 
 
 ```bash
 python -m locust
@@ -142,7 +145,8 @@ Sample performance test results can be found on the [performance_results](https:
 
 > [!WARNING]
 > Due to some issues with Poetry, the performance test is not working with Poetry. Please use Conda for performance testing.
-poetry
+
+- poetry
 ```bash
 poetry run python -m locust
 ```
