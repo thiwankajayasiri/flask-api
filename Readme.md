@@ -67,6 +67,9 @@ Detailed below are the design considerations for the API.
 - Update (PUT /employees/<id>)
 - Delete (DELETE /employees/<id>)
 
+
+Please refer to comprehensive design decisions on the [design_decisions](docs/design_decisions.md).
+
 > [!WARNING]
 > Always check for a valid `id` before performing update or delete operations to prevent accidental data loss.
 
