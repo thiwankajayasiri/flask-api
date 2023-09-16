@@ -67,6 +67,9 @@ Detailed below are the design considerations for the API.
 - Update (PUT /employees/<id>)
 - Delete (DELETE /employees/<id>)
 
+
+Please refer to comprehensive design decisions on the [design_decisions](docs/design_decisions.md).
+
 > [!WARNING]
 > Always check for a valid `id` before performing update or delete operations to prevent accidental data loss.
 
@@ -112,11 +115,15 @@ poetry run flask run
 
 For more comprehensive details, please refer to the [API Documentation](https://thiwankajayasiri.github.io/flask-api/app.html).
 
-For detailed examples of API usage, please refer to the [usage documentation](api_usage.md).
+For detailed examples of API usage, please refer to the [usage documentation](docs/api_usage.md).
+
+### ENDPOINT URL
 
 > [!NOTE]
-> Use the ENTRYPOINT `https://employee-api-stage-fd8d182a1891.herokuapp.com/` use Heroku based deployment
-please follow the usage patter given on the usage_documentation
+> Use the ENDPOINT `https://employee-api-stage-fd8d182a1891.herokuapp.com/` Heroku based deployment
+
+
+please follow the usage pattern given on the [usage_documentation](docs/api_usage.md), and replace the `http://localhost:5000` with the above ENDPOINT URL.
 
 e.g.
 
