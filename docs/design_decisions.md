@@ -61,13 +61,13 @@ By adhering to RESTful principles and employing caching, rate-limiting, and vali
 - **Actor**: Client
 - **Receiver**: Server
 - **Action**: POST /v1/employees
-- **Server State**: Activated
+- <span style="color:green">**Server State**: Activated</span>
 - **Notes**: Validate the request
 - **Server Responses**:
-  - 201 Created (if successful)
-  - 400 Bad Request (if failure)
-  - 500 Internal Server Error (if server error)
-- **Server State**: Deactivated
+  - <span style="color:blue">201 Created</span> (if successful)
+  - <span style="color:red">400 Bad Request</span> (if failure)
+  - <span style="color:orange">500 Internal Server Error</span> (if server error)
+- <span style="color:gray">**Server State**: Deactivated</span>
 
 ---
 
@@ -76,13 +76,12 @@ By adhering to RESTful principles and employing caching, rate-limiting, and vali
 - **Actor**: Client
 - **Receiver**: Server
 - **Action**: GET /v1/employees
-- **Server State**: Activated
-- **Notes**: Retrieve list of employees
+- <span style="color:green">**Server State**: Activated</span>
 - **Server Responses**:
-  - 200 OK (if successful)
-  - 400 Bad Request (if failure)
-  - 500 Internal Server Error (if server error)
-- **Server State**: Deactivated
+  - <span style="color:blue">200 OK</span> (if successful)
+  - <span style="color:red">400 Bad Request</span> (if failure)
+  - <span style="color:orange">500 Internal Server Error</span> (if server error)
+- <span style="color:gray">**Server State**: Deactivated</span>
 
 ---
 
@@ -91,14 +90,13 @@ By adhering to RESTful principles and employing caching, rate-limiting, and vali
 - **Actor**: Client
 - **Receiver**: Server
 - **Action**: PUT /v1/employees/{id}
-- **Server State**: Activated
-- **Notes**: Update the employee based on ID
+- <span style="color:green">**Server State**: Activated</span>
 - **Server Responses**:
-  - 200 OK (if successful)
-  - 404 Not Found (if not found)
-  - 400 Bad Request (if failure)
-  - 500 Internal Server Error (if server error)
-- **Server State**: Deactivated
+  - <span style="color:blue">200 OK</span> (if successful)
+  - <span style="color:purple">404 Not Found</span> (if not found)
+  - <span style="color:red">400 Bad Request</span> (if failure)
+  - <span style="color:orange">500 Internal Server Error</span> (if server error)
+- <span style="color:gray">**Server State**: Deactivated</span>
 
 ---
 
@@ -107,10 +105,10 @@ By adhering to RESTful principles and employing caching, rate-limiting, and vali
 - **Actor**: Client
 - **Receiver**: Server
 - **Action**: DELETE /v1/employees/{id}
-- **Server State**: Activated
-- **Notes**: Delete the employee based on ID
+- <span style="color:green">**Server State**: Activated</span>
 - **Server Responses**:
-  - 200 OK (if successful)
-  - 404 Not Found (if not found)
-  - 500 Internal Server Error (if server error)
-- **Server State**: Deactivated
+  - <span style="color:blue">200 OK</span> (if successful)
+  - <span style="color:purple">404 Not Found</span> (if not found)
+  - <span style="color:orange">500 Internal Server Error</span> (if server error)
+- <span style="color:gray">**Server State**: Deactivated</span>
+
